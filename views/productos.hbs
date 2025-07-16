@@ -1,0 +1,18 @@
+<h2>Catálogo de Productos</h2>
+
+{{#if hayProductos}}
+    <ul>
+        {{#each listaDeProductos}}
+            <li>
+                <strong>{{this.nombre}}</strong> - ${{this.precio}}
+                {{#if this.enStock}}
+                    <span style="color: green;">(Disponible)</span>
+                {{else}}
+                    <span style="color: red;">(Agotado)</span>
+                {{/if}}
+            </li>
+        {{/each}}
+    </ul>
+{{else}}
+    <p>No hay productos para mostrar en este momento.</p>
+{{/if}}

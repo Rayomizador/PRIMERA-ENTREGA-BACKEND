@@ -1,32 +1,61 @@
-
-import fs from 'fs/promises'; // Importa el módulo 'fs/promises' para operaciones de archivo asíncronas
+// managers/ProductManager.js
+import fs from 'fs/promises'; // Importa el módulo 'fs/promises' para operaciones de archivo asíncronas, importante
 
 class ProductManager {
     constructor(filePath) {
         this.filePath = filePath; // Ruta del archivo JSON donde se almacenarán los productos
         this.products = []; // Array para almacenar los productos en memoria
         this.nextId = 1; // Contador para generar IDs únicos
-        this.initialize(); // Llama al método de inicialización al crear una instancia
+        this.isInitialized = false; // Nueva bandera para asegurar que la inicialización solo corra una vez
     }
 
     // Método asíncrono para inicializar el ProductManager
     async initialize() {
+        if (this.isInitialized) {
+            return; // Si ya está inicializado, no hacer nada (para eficiencia)
+        }
+
         try {
             // Intenta leer el archivo de productos
             const data = await fs.readFile(this.filePath, 'utf8');
-            this.products = JSON.parse(data); // Parsea los datos JSON a un array de productos
-            // Calcula el siguiente ID disponible basándose en los IDs existentes
+            let loadedProducts = JSON.parse(data); // Carga los productos del archivo
+
+            // Procesa los productos cargados: asigna IDs si faltan y actualiza nextId
+            this.products = loadedProducts.map(p => {
+                if (p.id === undefined || p.id === null || isNaN(p.id)) {
+                    // Si el producto no tiene ID o es inválido, asigna uno nuevo
+                    p.id = this.nextId++;
+                } else {
+                    // Si ya tiene un ID válido, asegúrate de que nextId sea mayor
+                    if (p.id >= this.nextId) {
+                        this.nextId = p.id + 1;
+                    }
+                }
+                return p; // Retorna el producto (con ID asignado si fue necesario)
+            });
+
+            // Después de procesar todos los productos cargados, asegúrate de que nextId sea el máximo + 1
             if (this.products.length > 0) {
-                this.nextId = Math.max(...this.products.map(p => p.id)) + 1;
+                const maxExistingId = Math.max(...this.products.map(p => p.id));
+                if (maxExistingId >= this.nextId) {
+                    this.nextId = maxExistingId + 1;
+                }
             }
+
             console.log('Productos cargados desde el archivo:', this.filePath);
+            await this.saveProducts(); // Guarda los productos de nuevo en el archivo (ahora con IDs)
+            this.isInitialized = true; // Marca el manager como inicializado
+
         } catch (error) {
-            // Si el archivo no existe o hay un error al leerlo/parsearlo, inicializa un array vacío
+            // Si el archivo no existe o hay un error al leerlo/parsearlo
             if (error.code === 'ENOENT') {
                 console.log('El archivo de productos no existe, creando uno nuevo:', this.filePath);
+                this.products = []; // Asegura que el array de productos esté vacío
                 await this.saveProducts(); // Guarda un array vacío para crear el archivo
+                this.isInitialized = true; // Marca el manager como inicializado
             } else {
                 console.error('Error al inicializar ProductManager:', error);
+                throw new Error('Fallo al inicializar ProductManager.'); // Lanza el error para que sea manejado
             }
         }
     }
@@ -45,6 +74,10 @@ class ProductManager {
 
     // Método para agregar un nuevo producto
     async addProduct({ title, description, code, price, status = true, stock, category, thumbnails = [] }) {
+        // Asegúrate de que el ProductManager esté inicializado antes de agregar
+        if (!this.isInitialized) {
+            await this.initialize();
+        }
         // Valida que todos los campos obligatorios estén presentes
         if (!title || !description || !code || !price || !stock || !category) {
             throw new Error('Todos los campos obligatorios (title, description, code, price, stock, category) son requeridos.');
@@ -75,11 +108,19 @@ class ProductManager {
 
     // Método para obtener todos los productos
     async getProducts() {
+        // Asegúrate de que el ProductManager esté inicializado antes de obtener
+        if (!this.isInitialized) {
+            await this.initialize();
+        }
         return this.products; // Retorna el array de productos
     }
 
     // Método para obtener un producto por su ID
     async getProductById(id) {
+        // Asegúrate de que el ProductManager esté inicializado antes de obtener
+        if (!this.isInitialized) {
+            await this.initialize();
+        }
         const product = this.products.find(p => p.id === id); // Busca el producto por ID
         if (!product) {
             throw new Error(`Producto con ID ${id} no encontrado.`);
@@ -89,6 +130,10 @@ class ProductManager {
 
     // Método para actualizar un producto por su ID
     async updateProduct(id, updatedFields) {
+        // Asegúrate de que el ProductManager esté inicializado antes de actualizar
+        if (!this.isInitialized) {
+            await this.initialize();
+        }
         const index = this.products.findIndex(p => p.id === id); // Encuentra el índice del producto
 
         if (index === -1) {
@@ -108,6 +153,10 @@ class ProductManager {
 
     // Método para eliminar un producto por su ID
     async deleteProduct(id) {
+        // Asegúrate de que el ProductManager esté inicializado antes de eliminar
+        if (!this.isInitialized) {
+            await this.initialize();
+        }
         const initialLength = this.products.length; // Longitud inicial del array
         this.products = this.products.filter(p => p.id !== id); // Filtra el producto a eliminar
 
