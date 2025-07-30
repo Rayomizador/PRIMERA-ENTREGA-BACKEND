@@ -1,83 +1,35 @@
 [
   {
-    "id": 1,
-    "title": "Pantalón de Mezclilla Slim Fit",
-    "description": "Pantalón de mezclilla azul clásico con corte slim fit, ideal para un look casual y moderno. Tejido elástico para mayor comodidad.",
-    "code": "SKU-JEANS-001",
-    "price": 799.99,
+    "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "title": "Limpiador Multiusos Floral",
+    "description": "Limpiador desinfectante para todo tipo de superficies con aroma floral.",
+    "code": "CL-001",
+    "price": 45.50,
     "status": true,
-    "stock": 120,
-    "category": "pantalones",
-    "thumbnails": [
-      "https://placehold.co/600x800/3498DB/FFFFFF?text=Frente",
-      "https://placehold.co/600x800/3498DB/FFFFFF?text=Atr%C3%A1s"
-    ]
+    "stock": 150,
+    "category": "Limpieza",
+    "thumbnails": ["/images/limpiador-floral.jpg"]
   },
   {
-    "id": 2,
-    "title": "Pantalón Chino de Gabardina",
-    "description": "Pantalón estilo chino color caqui, fabricado en gabardina de algodón suave. Perfecto para la oficina o eventos semi-formales.",
-    "code": "SKU-CHINO-001",
-    "price": 649.5,
-    "status": true,
-    "stock": 85,
-    "category": "pantalones",
-    "thumbnails": [
-      "https://placehold.co/600x800/F1C40F/FFFFFF?text=Frente",
-      "https://placehold.co/600x800/F1C40F/FFFFFF?text=Detalle"
-    ]
-  },
-  {
-    "id": 3,
-    "title": "Jogger Deportivo de Felpa",
-    "description": "Jogger de felpa color gris jaspeado con cintura elástica y cordón ajustable. Comodidad máxima para el día a día o para hacer deporte.",
-    "code": "SKU-JOGGER-001",
-    "price": 550,
-    "status": true,
-    "stock": 200,
-    "category": "pantalones",
-    "thumbnails": [
-      "https://placehold.co/600x800/95A5A6/FFFFFF?text=Frente"
-    ]
-  },
-  {
-    "id": 4,
-    "title": "Pantalón de Vestir Corte Recto",
-    "description": "Pantalón de vestir formal en color negro, con corte recto clásico. Fabricado con tela de alta calidad que no se arruga fácilmente.",
-    "code": "SKU-DRESS-001",
-    "price": 899,
-    "status": true,
-    "stock": 60,
-    "category": "pantalones",
-    "thumbnails": [
-      "https://placehold.co/600x800/2C3E50/FFFFFF?text=Frente",
-      "https://placehold.co/600x800/2C3E50/FFFFFF?text=Atr%C3%A1s",
-      "https://placehold.co/600x800/2C3E50/FFFFFF?text=Tela"
-    ]
-  },
-  {
-    "id": 5,
-    "title": "Pantalón Cargo con Bolsillos",
-    "description": "Pantalón tipo cargo en color verde olivo, con múltiples bolsillos funcionales. Resistente y práctico para actividades al aire libre.",
-    "code": "SKU-CARGO-001",
-    "price": 720,
+    "id": "b2c3d4e5-f6a7-8901-2345-67890abcdef1",
+    "title": "Desengrasante de Cocina Cítrico",
+    "description": "Potente desengrasante para estufas y campanas con un fresco aroma a limón.",
+    "code": "CL-002",
+    "price": 60.00,
     "status": true,
     "stock": 95,
-    "category": "pantalones",
-    "thumbnails": [
-      "https://placehold.co/600x800/27AE60/FFFFFF?text=Frente",
-      "https://placehold.co/600x800/27AE60/FFFFFF?text=Bolsillo"
-    ]
+    "category": "Limpieza",
+    "thumbnails": ["/images/desengrasante.gif"]
   },
   {
-    "id": 6,
-    "title": "Pantalón de Pana Clásico",
-    "description": "Pantalón de pana suave en color café oscuro. Un estilo retro y cómodo, ideal para la temporada de otoño-invierno.",
-    "code": "SKU-PANA-001",
-    "price": 680.75,
-    "status": false,
-    "stock": 0,
-    "category": "pantalones",
-    "thumbnails": []
+    "id": "c3d4e5f6-a7b8-9012-3456-7890abcdef2",
+    "title": "Limpiavidrios Anti-empañante",
+    "description": "Deja vidrios y espejos relucientes y sin marcas.",
+    "code": "CL-003",
+    "price": 38.90,
+    "status": true,
+    "stock": 120,
+    "category": "Limpieza",
+    "thumbnails": ["/images/limpiavidrios.png"]
   }
 ]

@@ -1,0 +1,25 @@
+{{!-- src/views/home.handlebars --}}
+<h1>{{title}}</h1>
+<p>Una lista de todos los productos disponibles en nuestra tienda.</p>
+<hr>
+
+<div class="product-list-container">
+    {{#if products}}
+        <ul>
+            {{#each products}}
+            <li>
+                {{!-- Verificamos si hay al menos una imagen en thumbnails --}}
+                {{#if this.thumbnails.length}}
+                    <img src="{{this.thumbnails.[0]}}" alt="{{this.title}}" style="max-width: 100px; height: auto; border-radius: 8px; margin-bottom: 10px;">
+                {{/if}}
+
+                <strong>{{this.title}}</strong>
+                <p>{{this.description}}</p>
+                <p>Precio: ${{this.price}} | Stock: {{this.stock}} | Categoría: {{this.category}}</p>
+            </li>
+            {{/each}}
+        </ul>
+    {{else}}
+        <p>Actualmente no hay productos en la tienda.</p>
+    {{/if}}
+</div>

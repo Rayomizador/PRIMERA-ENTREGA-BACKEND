@@ -1,85 +1,77 @@
-import fs from 'fs/promises'; // Importa el módulo 'fs/promises'
-import { v4 as uuidv4 } from 'uuid'; // Importa uuid para generar IDs únicos
+import { promises as fs } from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { randomUUID } from 'crypto';
+import { productManager } from './ProductManager.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 class CartManager {
     constructor(filePath) {
-        this.filePath = filePath; // Ruta del archivo JSON de carritos
-        this.carts = []; // Array para almacenar los carritos en memoria
-        this.initialize(); // Llama al método de inicialización
+        this.path = path.join(__dirname, '..', 'data', filePath);
     }
 
-    // Método asíncrono para inicializar el CartManager
-    async initialize() {
+    async _readData() {
         try {
-            // Intenta leer el archivo de carritos
-            const data = await fs.readFile(this.filePath, 'utf8');
-            this.carts = JSON.parse(data); // Parsea los datos JSON
-            console.log('Carritos cargados desde el archivo:', this.filePath);
+            const data = await fs.readFile(this.path, 'utf-8');
+            return JSON.parse(data);
         } catch (error) {
-            // Si el archivo no existe o hay un error, inicializa un array vacío
-            if (error.code === 'ENOENT') {
-                console.log('El archivo de carritos no existe, creando uno nuevo:', this.filePath);
-                await this.saveCarts(); // Guarda un array vacío para crear el archivo
-            } else {
-                console.error('Error al inicializar CartManager:', error);
-            }
+            if (error.code === 'ENOENT') return [];
+            throw error;
         }
     }
 
-    // Método privado asíncrono para guardar los carritos en el archivo JSON
-    async saveCarts() {
-        try {
-            // Escribe el array de carritos en el archivo, formateado para legibilidad
-            await fs.writeFile(this.filePath, JSON.stringify(this.carts, null, 2), 'utf8');
-            console.log('Carritos guardados en el archivo:', this.filePath);
-        } catch (error) {
-            console.error('Error al guardar carritos:', error);
-            throw new Error('No se pudieron guardar los carritos.');
-        }
+    async _writeData(data) {
+        await fs.writeFile(this.path, JSON.stringify(data, null, 2));
     }
 
-    // Método para crear un nuevo carrito
     async createCart() {
+        const carts = await this._readData();
         const newCart = {
-            id: uuidv4(), // Genera un ID único para el carrito
-            products: [] // Inicializa un array vacío para los productos del carrito
+            id: randomUUID(),
+            products: []
         };
-        this.carts.push(newCart); // Agrega el nuevo carrito al array
-        await this.saveCarts(); // Guarda los carritos actualizados
-        return newCart; // Retorna el carrito creado
+        carts.push(newCart);
+        await this._writeData(carts);
+        return newCart;
     }
 
-    // Método para obtener un carrito por su ID
     async getCartById(id) {
-        const cart = this.carts.find(c => c.id === id); // Busca el carrito por ID
+        const carts = await this._readData();
+        const cart = carts.find(c => c.id === id);
         if (!cart) {
-            throw new Error(`Carrito con ID ${id} no encontrado.`);
+            throw new Error(`Carrito con id ${id} no encontrado.`);
         }
-        return cart; // Retorna el carrito encontrado
+        return cart;
     }
 
-    // Método para agregar un producto a un carrito
     async addProductToCart(cartId, productId) {
-        const cartIndex = this.carts.findIndex(c => c.id === cartId); // Encuentra el índice del carrito
+        // Verificar si el producto existe
+        await productManager.getProductById(productId);
+
+        const carts = await this._readData();
+        const cartIndex = carts.findIndex(c => c.id === cartId);
 
         if (cartIndex === -1) {
-            throw new Error(`Carrito con ID ${cartId} no encontrado.`);
+            throw new Error(`Carrito con id ${cartId} no encontrado.`);
         }
 
-        const cart = this.carts[cartIndex]; // Obtiene el carrito
-        const productInCartIndex = cart.products.findIndex(p => p.product === productId); // Busca el producto en el carrito
+        const cart = carts[cartIndex];
+        const productInCartIndex = cart.products.findIndex(p => p.product === productId);
 
-        if (productInCartIndex !== -1) {
-            // Si el producto ya existe en el carrito, incrementa la cantidad
+        if (productInCartIndex > -1) {
+            // Si el producto ya existe, incrementar cantidad
             cart.products[productInCartIndex].quantity++;
         } else {
-            // Si el producto no existe, lo agrega con cantidad 1
+            // Si no existe, agregarlo
             cart.products.push({ product: productId, quantity: 1 });
         }
 
-        await this.saveCarts(); // Guarda los carritos actualizados
-        return cart; // Retorna el carrito modificado
+        carts[cartIndex] = cart;
+        await this._writeData(carts);
+        return cart;
     }
 }
 
-export default CartManager; // Exporta la clase CartManager
+export const cartManager = new CartManager('carts.json');

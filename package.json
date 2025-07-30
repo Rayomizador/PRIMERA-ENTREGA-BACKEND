@@ -1,11 +1,13 @@
 {
   "name": "primera-entrega-backend",
   "version": "1.0.0",
-  "main": "express.js",
+  "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "node express.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    
+    
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -17,12 +19,16 @@
     "url": "https://github.com/Rayomizador/PRIMERA-ENTREGA-BACKEND/issues"
   },
   "homepage": "https://github.com/Rayomizador/PRIMERA-ENTREGA-BACKEND#readme",
-  "keywords": [],
-  "description": "",
+   "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "express": "^5.1.0",
-    "express-handlebars": "^8.0.3",
-    "socket.io": "^4.8.1",
-    "uuid": "^11.1.0"
+    "express": "^4.19.2",
+    "express-handlebars": "^7.1.2",
+    "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
   }
 }
+
