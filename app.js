@@ -20,6 +20,8 @@ const PORT = 8080;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+//USO DE BOOTSTRAP
+app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist')));
 
 // --- Configuración de Handlebars (Motor de Plantillas) ---
 app.engine('handlebars', handlebars.engine());

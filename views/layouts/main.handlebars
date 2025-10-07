@@ -4,20 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
+    
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     
-    <nav class="navbar">
-        <a href="/products">Tienda</a>
-        <a href="/realtimeproducts">Gestión en Vivo</a>
-        <a href="/carts/a1b2c3d4-e5f6-7890-1234-567890abcdef">Mi Carrito</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">MiTienda</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/products">Tienda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/realtimeproducts">Gestión en Vivo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/carts/a1b2c3d4-e5f6-7890-1234-567890abcdef">Mi Carrito</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </nav>
 
-    <main>
+    <main class="container mt-4">
         {{{body}}}
     </main>
     
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/realtime.js"></script>
 </body>

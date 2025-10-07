@@ -6,9 +6,8 @@ import { productManager } from '../managers/ProductManager.js';
 
 const router = Router();
 
-// --- NUEVA RUTA PARA LA PÁGINA DE INICIO ---
+// rutes/views.router.js
 router.get('/', (req, res) => {
-    // Simplemente renderiza una nueva vista que llamaremos 'index'
     res.render('index', {
         title: 'Bienvenido a Nuestra Tienda'
     });

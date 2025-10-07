@@ -1,15 +1,37 @@
-<div class="welcome-container">
-    <h1>{{title}}</h1>
-    <p>Explora nuestros productos y encuentra lo que necesitas.</p>
+<div class="p-5 mb-4 bg-light rounded-3">
+    <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">¡Bienvenido a Nuestra Tienda!</h1>
+        <p class="col-md-8 fs-4">
+            Aquí encontrarás los mejores productos de limpieza para tu hogar.
+            Explora nuestro catálogo para descubrir nuestras ofertas exclusivas.
+        </p>
+        <a class="btn btn-primary btn-lg" href="/products" role="button">
+            Ir a la Tienda
+        </a>
+    </div>
 </div>
 
-<div class="sphere-container">
-    <div class="sphere">
-  <div><p>Tienda</p></div>
-        <div><p>Ofertas</p></div>
-        <div><p>Backend</p></div>
-        <div><p>Node.js</p></div>
-        <div><p>Express</p></div>
-        <div><p>HBS</p></div>
+<div class="row align-items-md-stretch">
+    <div class="col-md-6">
+        <div class="h-100 p-5 text-white bg-dark rounded-3">
+            <h2>Gestión en Vivo</h2>
+            <p>
+                Añade o elimina productos de nuestro inventario en tiempo real y ve cómo se actualiza para todos los usuarios.
+            </p>
+            <a class="btn btn-outline-light" href="/realtimeproducts" role="button">
+                Gestionar Productos
+            </a>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="h-100 p-5 bg-light border rounded-3">
+            <h2>Tu Carrito</h2>
+            <p>
+                Revisa los productos que has añadido a tu carrito de compras antes de finalizar tu pedido.
+            </p>
+            <a class="btn btn-outline-secondary" href="/carts/a1b2c3d4-e5f6-7890-1234-567890abcdef" role="button">
+                Ver Mi Carrito
+            </a>
+        </div>
     </div>
 </div>

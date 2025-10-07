@@ -1,28 +1,28 @@
-{{!-- src/views/home.handlebars --}}
-<h1>{{title}}</h1>
-<p>Una lista de todos los productos disponibles en nuestra tienda.</p>
-<hr>
+<div class="container">
+    <h1 class="mb-4">{{title}}</h1>
+    <p>Una lista de todos los productos disponibles en nuestra tienda.</p>
+    <hr>
 
-<div class="product-list-container">
-    {{#if products}}
-        <ul>
+    <div class="row">
+        {{#if products.length}}
             {{#each products}}
-            <li>
-                {{#if this.thumbnails.length}}
-                    <img src="{{this.thumbnails.[0]}}" alt="{{this.title}}" style="max-width: 100px; height: auto; border-radius: 8px; margin-bottom: 10px;">
-                {{/if}}
-
-                {{!-- AQUÍ ESTÁ EL CAMBIO --}}
-                <a href="/products/{{this.id}}">
-                    <strong>{{this.title}}</strong>
-                </a>
-                
-                <p>{{this.description}}</p>
-                <p>Precio: ${{this.price}} | Stock: {{this.stock}} | Categoría: {{this.category}}</p>
-            </li>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    {{#if this.thumbnails.length}}
+                        <img src="{{this.thumbnails.[0]}}" class="card-img-top" alt="{{this.title}}">
+                    {{/if}}
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{this.title}}</h5>
+                        <p class="card-text">{{this.description}}</p>
+                        <p class="card-text"><strong>Precio: ${{this.price}}</strong></p>
+                        
+                        <a href="/products/{{this.id}}" class="btn btn-primary mt-auto">Ver Detalles</a>
+                    </div>
+                </div>
+            </div>
             {{/each}}
-        </ul>
-    {{else}}
-        <p>Actualmente no hay productos en la tienda.</p>
-    {{/if}}
+        {{else}}
+            <p>Actualmente no hay productos en la tienda.</p>
+        {{/if}}
+    </div>
 </div>
