@@ -8,12 +8,15 @@
         <ul>
             {{#each products}}
             <li>
-                {{!-- Verificamos si hay al menos una imagen en thumbnails --}}
                 {{#if this.thumbnails.length}}
                     <img src="{{this.thumbnails.[0]}}" alt="{{this.title}}" style="max-width: 100px; height: auto; border-radius: 8px; margin-bottom: 10px;">
                 {{/if}}
 
-                <strong>{{this.title}}</strong>
+                {{!-- AQUÍ ESTÁ EL CAMBIO --}}
+                <a href="/products/{{this.id}}">
+                    <strong>{{this.title}}</strong>
+                </a>
+                
                 <p>{{this.description}}</p>
                 <p>Precio: ${{this.price}} | Stock: {{this.stock}} | Categoría: {{this.category}}</p>
             </li>

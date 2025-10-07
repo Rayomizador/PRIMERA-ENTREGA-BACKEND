@@ -1,0 +1,27 @@
+{{!-- src/views/productDetail.handlebars --}}
+
+<div class="product-detail-container">
+    {{#if product}}
+        {{!-- Usamos la primera imagen de la galería como principal --}}
+        {{#if product.thumbnails.length}}
+            <img src="{{product.thumbnails.[0]}}" alt="{{product.title}}" class="product-detail-image">
+        {{/if}}
+
+        <div class="product-detail-info">
+            <h1>{{product.title}}</h1>
+            <p class="product-description">{{product.description}}</p>
+            <p class="product-code">Código: {{product.code}}</p>
+            <p class="product-category">Categoría: {{product.category}}</p>
+            <p class="product-stock">Unidades disponibles: {{product.stock}}</p>
+            <p class="product-price">${{product.price}}</p>
+            
+            {{!-- Aquí podríamos añadir un botón de "Agregar al carrito" en el futuro --}}
+            <button onclick="alert('Funcionalidad no implementada todavía')">Agregar al Carrito</button>
+        </div>
+    {{else}}
+        <h1>Producto no encontrado</h1>
+        <p>El producto que buscas no existe o fue eliminado.</p>
+    {{/if}}
+
+    <a href="/" class="back-link">← Volver a la tienda</a>
+</div>
