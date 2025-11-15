@@ -5,19 +5,18 @@
     <div class="product-list">
         <h2>Lista de Productos</h2>
         <ul id="products-list">
-    {{#if products}}
-        {{#each products}}
-        <li id="product-{{this.id}}" data-id="{{this.id}}">
-            <span>
-                <strong>{{this.title}}</strong> (ID: {{this.id}}) - Precio: ${{this.price}}
-            </span>
-            <button class="delete-btn">Eliminar</button>
-        </li>
-        {{/each}}
-    {{else}}
-        <p>No hay productos para mostrar.</p>
-    {{/if}}
-</ul>
+            {{#if products}}
+                {{#each products}}
+                <li id="product-{{this.id}}" data-id="{{this.id}}">
+                    <span>
+                        <strong>{{this.title}}</strong> (ID: {{this.id}}) - Precio: ${{this.price}}
+                    </span>
+                    <button class="delete-btn">Eliminar</button>
+                </li>
+                {{/each}}
+            {{else}}
+                <p>No hay productos para mostrar.</p>
+            {{/if}}
         </ul>
     </div>
 
@@ -44,3 +43,5 @@
         </div>
     </div>
 </div>
+
+<script src="/js/realtime.js"></script>

@@ -4,22 +4,29 @@ import { Server } from 'socket.io';
 import handlebars from 'express-handlebars';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import cookieParser from 'cookie-parser';
+import passport from 'passport';
+import ENV from './config/env.js';
+import initializePassport from './config/passport.js';
 
 import productsRouter from './rutes/products.router.js';
 import cartsRouter from './rutes/carts.router.js';
 import viewsRouter from './rutes/views.router.js';
+import sessionsRouter from './rutes/sessions.router.js';
+import usersRouter from './rutes/users.router.js';
 
 // --- Configuración Inicial ---
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = 8080;
+const PORT = ENV.PORT;
 
 // --- Middlewares ---
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieParser());
 //USO DE BOOTSTRAP
 app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist')));
 
@@ -27,6 +34,8 @@ app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstra
 app.engine('handlebars', handlebars.engine());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'handlebars');
+initializePassport();
+app.use(passport.initialize());
 
 // --- Configuración de Socket.io ---
 const httpServer = createServer(app);
@@ -38,6 +47,8 @@ app.set('io', io);
 // --- Rutas ---
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
+app.use('/api/sessions', sessionsRouter);
+app.use('/api/users', usersRouter);
 app.use('/', viewsRouter);
 
 // --- Inicialización del Servidor ---
@@ -47,9 +58,9 @@ httpServer.listen(PORT, () => {
 
 // --- Lógica de Sockets ---
 io.on('connection', (socket) => {
-    console.log(`✅ Nuevo cliente conectado: ${socket.id}`);
+    console.log(`Nuevo cliente conectado: ${socket.id}`);
 
     socket.on('disconnect', () => {
-        console.log(`❌ Cliente desconectado: ${socket.id}`);
+        console.log(`Cliente desconectado: ${socket.id}`);
     });
 });

@@ -47,7 +47,25 @@ router.get('/products/:pid', async (req, res) => {
 
 // --- RUTA EXISTENTE PARA PRODUCTOS EN TIEMPO REAL ---
 router.get('/realtimeproducts', async (req, res) => {
-   
+    try {
+        const products = await productManager.getProducts();
+        res.render('realtimeproducts', {
+            title: 'Gestión en Tiempo Real',
+            products
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).render('error', { message: 'No se pudieron cargar los productos en tiempo real.' });
+    }
+});
+
+// Vistas de autenticación
+router.get('/login', (req, res) => {
+    res.render('login', { title: 'Iniciar Sesión' });
+});
+
+router.get('/register', (req, res) => {
+    res.render('register', { title: 'Registrarse' });
 });
 
 export default router;

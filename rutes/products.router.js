@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { productManager } from '../managers/ProductManager.js';
+import { authenticateJWT, authorizeRoles } from '../middlewares/auth.js';
 
 const router = Router();
 
@@ -24,7 +25,7 @@ router.get('/:pid', async (req, res) => {
 });
 
 // POST /api/products
-router.post('/', async (req, res) => {
+router.post('/', authenticateJWT, authorizeRoles('admin'), async (req, res) => {
     try {
         const newProduct = await productManager.addProduct(req.body);
         // Emitir evento a todos los clientes conectados
@@ -37,7 +38,7 @@ router.post('/', async (req, res) => {
 });
 
 // PUT /api/products/:pid
-router.put('/:pid', async (req, res) => {
+router.put('/:pid', authenticateJWT, authorizeRoles('admin'), async (req, res) => {
     try {
         const updatedProduct = await productManager.updateProduct(req.params.pid, req.body);
         const io = req.app.get('io');
@@ -49,7 +50,7 @@ router.put('/:pid', async (req, res) => {
 });
 
 // DELETE /api/products/:pid
-router.delete('/:pid', async (req, res) => {
+router.delete('/:pid', authenticateJWT, authorizeRoles('admin'), async (req, res) => {
     try {
         await productManager.deleteProduct(req.params.pid);
         // Emitir evento a todos los clientes conectados
