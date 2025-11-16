@@ -68,4 +68,14 @@ router.get('/register', (req, res) => {
     res.render('register', { title: 'Registrarse' });
 });
 
+// Vista de perfil (carga datos vía JS con /api/sessions/current)
+router.get('/profile', (req, res) => {
+    res.render('profile', { title: 'Mi Perfil' });
+});
+
+// Vista admin para listado de usuarios (JS verifica rol y consume /api/users)
+router.get('/admin/users', (req, res) => {
+    res.render('adminUsers', { title: 'Admin - Usuarios' });
+});
+
 export default router;

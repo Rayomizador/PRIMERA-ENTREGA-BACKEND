@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "id": "b883fbc2-02e6-4ebf-9c59-907313c6f130",
+    "first_name": "Test",
+    "last_name": "User",
+    "email": "test@example.com",
+    "age": 25,
+    "password": "$2b$10$Qws15CPila2OkfGa.8fsEeKAcuu3QcvcOTLtyA5DkwjYY7wUPmZ1W",
+    "cart": "09037ffc-d96a-4810-89ea-c1f7f538744f",
+    "role": "user"
+  }
+]
